@@ -14,17 +14,11 @@
     "pm2",
     "dingtalk"
   ],
-  "author": "Tongyong Liu <louislty@msn.com> (https://github.com/mattpker)",
-  "licenses": [
-    {
-      "type": "MIT",
-      "url": "https://github.com/mattpker/pm2-slack/blob/master/LICENSE"
-    }
-  ],
+  "author": "Tongyong Liu <louislty@msn.com> (https://github.com/tyliu716)",
   "bugs": {
-    "url": "https://github.com/mattpker/pm2-slack/issues"
+    "url": "https://github.com/tyliu716/pm2-dingtalk/issues"
   },
-  "homepage": "https://github.com/mattpker/pm2-slack",
+  "homepage": "https://github.com/tyliu716/pm2-dingtalk",
   "dependencies": {
     "pm2": "^2.7.2",
     "pmx": "^1.5.4",
