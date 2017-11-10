@@ -25,7 +25,7 @@
     "urllib": "^2.25.1"
   },
   "config": {
-    "slack_url": null,
+    "dingtalk_url": null,
     "log": false,
     "error": true,
     "kill": true,
