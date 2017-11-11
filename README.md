@@ -7,7 +7,7 @@ This is a PM2 Module for sending events & logs from your PM2 processes to Dingta
 To install and setup pm2-dingtalk, run the following commands:
 
 ```
-pm2 install pm2-dingtalk
+pm2 install tyliu716/pm2-dingtalk
 pm2 set pm2-dingtalk:dingtalk_url https://dingtalk_custom_robot_url
 ```
 
