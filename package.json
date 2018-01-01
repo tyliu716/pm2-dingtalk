@@ -22,6 +22,7 @@
   "dependencies": {
     "pm2": "^2.7.2",
     "pmx": "^1.5.4",
+    "rolling-rate-limiter": "^0.1.10",
     "urllib": "^2.25.1"
   },
   "config": {
@@ -36,6 +37,10 @@
     "restart overlimit": true,
     "exit": false,
     "start": false,
-    "online": false
+    "online": false,
+    "interval":600000,
+    "maxInInterval":3,
+    "minDifference":1000
+
   }
 }

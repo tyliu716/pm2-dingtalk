@@ -4,6 +4,7 @@ var os = require('os');
 var pm2 = require('pm2');
 var pmx = require('pmx');
 var Urllib = require("urllib");
+const RateLimiter = require("rolling-rate-limiter");
 
 // Get the configuration from PM2
 var conf = pmx.initModule();
@@ -19,6 +20,40 @@ var suppressed = {
     isSuppressed: false,
     date: new Date().getTime()
 };
+
+var limit_interval=conf.interval?conf.interval:600000;
+var limit_maxInInterval=conf.maxInInterval?conf.maxInInterval:3;
+var limit_minDifference=conf.minDifference?conf.minDifference:1000;
+//3 times send per 10 mins
+const ding_limiter = RateLimiter({
+    interval: 600000, // in miliseconds
+    maxInInterval: 3,
+    minDifference: 1000 // optional: the minimum time (in miliseconds) between any two actions
+});
+
+
+function attemptAction(message) {
+
+    var timeLeft = ding_limiter(message);
+    if (timeLeft > 0) {
+    } else {
+        return true;
+    }
+
+}
+
+function push(data) {
+    var msg=JSON.stringify(data);
+    var limit=attemptAction("DING_PUSH:"+msg);
+
+    if(!limit){
+        return;
+    }else{
+        messages.push({
+            description: msg
+        });
+    }
+}
 
 var moduelName = 'pm2-dingtalk';
 
@@ -74,7 +109,7 @@ function processQueue() {
             suppressed.isSuppressed = true;
             suppressed.date = new Date().getTime();
             sendDingtalk({
-                name: 'pm2-dingtalk',
+                name: 'PM2 Notice:',
                 event: 'suppressed',
                 description: 'Messages are being suppressed due to rate limiting.'
             });
@@ -100,7 +135,8 @@ pm2.launchBus(function (err, bus) {
     if (conf.log) {
         bus.on('log:out', function (data) {
             if (data.process.name !== moduelName) {
-                messages.push({
+                // messages.push({
+                push({
                     name: data.process.name,
                     event: 'log',
                     description: JSON.stringify(data.data)
@@ -113,7 +149,8 @@ pm2.launchBus(function (err, bus) {
     if (conf.error) {
         bus.on('log:err', function (data) {
             if (data.process.name !== moduelName) {
-                messages.push({
+                // messages.push({
+                push({
                     name: data.process.name,
                     event: 'error',
                     description: JSON.stringify(data.data)
@@ -125,7 +162,8 @@ pm2.launchBus(function (err, bus) {
     // Listen for PM2 kill
     if (conf.kill) {
         bus.on('pm2:kill', function (data) {
-            messages.push({
+            // messages.push({
+            push({
                 name: 'PM2',
                 event: 'kill',
                 description: data.msg
@@ -137,7 +175,8 @@ pm2.launchBus(function (err, bus) {
     if (conf.exception) {
         bus.on('process:exception', function (data) {
             if (data.process.name !== moduelName) {
-                messages.push({
+                // messages.push({
+                push({
                     name: data.process.name,
                     event: 'exception',
                     description: JSON.stringify(data.data)
@@ -150,7 +189,9 @@ pm2.launchBus(function (err, bus) {
     bus.on('process:event', function (data) {
         if (conf[data.event]) {
             if (data.process.name !== moduelName) {
-                messages.push({
+
+                // messages.push({
+                push({
                     name: data.process.name,
                     event: data.event,
                     description: 'The following event has occured on the PM2 process ' + data.process.name + ': ' + data.event

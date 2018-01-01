@@ -872,6 +872,10 @@ micromatch@^2.1.5:
     parse-glob "^3.0.4"
     regex-cache "^0.4.2"
 
+microtime-nodejs@~1.0.0:
+  version "1.0.0"
+  resolved "http://registry.npm.taobao.org/microtime-nodejs/download/microtime-nodejs-1.0.0.tgz#8859404af2e2a462a15c9cd6bf2c4e468dabdbe8"
+
 mime-db@~1.30.0:
   version "1.30.0"
   resolved "http://registry.npm.taobao.org/mime-db/download/mime-db-1.30.0.tgz#74c643da2dd9d6a45399963465b26d5ca7d71f01"
@@ -1337,6 +1341,13 @@ rimraf@2, rimraf@^2.5.1, rimraf@^2.6.1:
   resolved "http://registry.npm.taobao.org/rimraf/download/rimraf-2.6.2.tgz#2ed8150d24a16ea8651e6d6ef0f47c4158ce7a36"
   dependencies:
     glob "^7.0.5"
+
+rolling-rate-limiter@^0.1.10:
+  version "0.1.10"
+  resolved "http://registry.npm.taobao.org/rolling-rate-limiter/download/rolling-rate-limiter-0.1.10.tgz#4c98600afaca327716a93805cd17d0c9f063f152"
+  dependencies:
+    microtime-nodejs "~1.0.0"
+    uuid "^3.0.1"
 
 safe-buffer@^5.0.1, safe-buffer@~5.1.0, safe-buffer@~5.1.1:
   version "5.1.1"
