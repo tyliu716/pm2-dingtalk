@@ -28,6 +28,10 @@ The following events can be subscribed to:
 - exit - Event fired when a process is exited. Default: false
 - start -  Event fired when a process is started. Default: false
 - online - Event fired when a process is online. Default: false
+- interval - 600000
+- maxInInterval - 3
+- minDifference - 1000
+
 
 You can simply turn these on and off by setting them to true or false using the PM2 set command.
 

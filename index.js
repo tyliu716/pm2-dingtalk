@@ -26,9 +26,9 @@ var limit_maxInInterval=conf.maxInInterval?conf.maxInInterval:3;
 var limit_minDifference=conf.minDifference?conf.minDifference:1000;
 //3 times send per 10 mins
 const ding_limiter = RateLimiter({
-    interval: 600000, // in miliseconds
-    maxInInterval: 3,
-    minDifference: 1000 // optional: the minimum time (in miliseconds) between any two actions
+    interval: limit_interval, // in miliseconds
+    maxInInterval: limit_maxInInterval,
+    minDifference: limit_minDifference // optional: the minimum time (in miliseconds) between any two actions
 });
 
 
